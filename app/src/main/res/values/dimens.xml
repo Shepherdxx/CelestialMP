@@ -21,6 +21,8 @@
     <dimen name="activity_horizontal_margin">10dp</dimen>
     <dimen name="activity_vertical_margin">10dp</dimen>
 
+    <!--table for radio edit -->
+    <dimen name="r_edit_column_margin">80dp</dimen>
 
     <!-- Margin around the floating action button in CatalogActivity -->
 

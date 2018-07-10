@@ -13,6 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="@dimen/r_edit_column_margin"
             android:text="@string/http"/>
 
         <EditText
@@ -40,7 +41,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create"/>
+            android:minWidth="@dimen/r_edit_column_margin"
+            android:text="@string/channel_name" />
 
         <EditText
             android:id="@+id/et_radio_name"
@@ -61,6 +63,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="@dimen/r_edit_column_margin"
             android:text="@string/create"/>
 
         <Spinner
@@ -81,7 +84,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create"/>
+            android:minWidth="@dimen/r_edit_column_margin"
+            android:text="@string/description" />
 
         <EditText
             android:id="@+id/et_radio_desc"
@@ -92,24 +96,60 @@
             />
     </LinearLayout>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
         >
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_cancel" />
 
-        <Button
-            android:id="@+id/button2"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_save" />
+            android:minWidth="@dimen/r_edit_column_margin"
+            android:text="@string/clock" />
+
+
+        <Spinner
+            android:id="@+id/et_radio_h_clock"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:entries="@array/hours"
+            android:textAlignment="center" />
+
+        <Spinner
+            android:id="@+id/et_radio_m_clock"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:entries="@array/minutes"
+            android:textAlignment="center" />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--&gt;-->
+    <!--<Button-->
+    <!--android:id="@+id/button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/action_cancel" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/action_save" />-->
+    <!--</LinearLayout>-->
 </LinearLayout>

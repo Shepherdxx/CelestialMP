@@ -177,6 +177,10 @@
     <string name="create">create</string>
     <string name="cancel">cancel</string>
 
+    <!--Label for Radio Edit-->
+    <string name="clock">Alarm clock</string>
+    <string name="description">Description</string>
+    <string name="channel_name">Title</string>
 
     <string name="fragment_tag">playlist</string>
     <!--Song Attribute-->
@@ -214,7 +218,9 @@
     <string name="develop">This function in development</string>
     <string name="action_loading">Loading</string>
     <string name="editor_insert_radio_failed">failed, try again</string>
+    <string name="editor_delete_radio_failed">failed, try again</string>
     <string name="editor_insert_radio_successful">complete</string>
+    <string name="editor_delete_radio_successful">delete complete</string>
     <string name="empty_view_title_text">Radio Channels are gone</string>
     <string name="empty_view_subtitle_text">try to find it</string>
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
@@ -226,4 +232,19 @@
     <string name="editor_update_data_successful">Data updated</string>
     <string name="editor_update_data_failed">Error with updating</string>
     <string name="unknown">unknown</string>
+    <string name="time_stamp">mm:ss</string>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
 </resources>
