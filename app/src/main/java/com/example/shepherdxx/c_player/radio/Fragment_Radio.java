@@ -20,9 +20,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.shepherdxx.c_player.R;
-import com.example.shepherdxx.c_player.data.Constants;
 import com.example.shepherdxx.c_player.data.PopUpToast;
+import com.example.shepherdxx.c_player.player.PreService;
 import com.example.shepherdxx.c_player.radio.Contract.RDB_Entry;
+
+import static com.example.shepherdxx.c_player.data.Constants.PLAYLIST_RADIO;
 
 
 public class Fragment_Radio extends Fragment implements
@@ -54,7 +56,7 @@ public class Fragment_Radio extends Fragment implements
     }
 
     public static Fragment_Radio newInstance() {
-        return newInstance(1, Constants.PLAYLIST_RADIO);
+        return newInstance(1, PLAYLIST_RADIO);
     }
 
 
@@ -68,7 +70,8 @@ public class Fragment_Radio extends Fragment implements
         mRDbHelper = new R_DbHelper(getContext());
         mDb = mRDbHelper.getWritableDatabase();
         if (getAll().getCount() == 0) {
-            BaseChannels.insertBaseData(mDb);
+            RadioChannel.insertBaseData(mDb);
+            getAll().close();
         }
 
         View view = inflater.inflate(R.layout.fragment_radio, container, false);
@@ -86,11 +89,12 @@ public class Fragment_Radio extends Fragment implements
         radioListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                toast.setMessage(
-                        "You click on " + String.valueOf(id)
-                                + "at postition " + String.valueOf(position)
-                );
-                //Todo добавить воспроизведение
+                try{
+                    getContext().startService(
+                        PreService.startBGService(getContext(),PLAYLIST_RADIO,position));
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -150,7 +154,6 @@ public class Fragment_Radio extends Fragment implements
                 null,
                 null,
                 null
-//                RDB_Entry.COLUMN_TIMESTAMP
         );
     }
 

@@ -4,6 +4,8 @@ import com.example.shepherdxx.c_player.data.Constants;
 
 import java.util.ArrayList;
 
+import static com.example.shepherdxx.c_player.data.Constants.MP_RADIO;
+import static com.example.shepherdxx.c_player.data.Constants.MP_SD_U;
 import static com.example.shepherdxx.c_player.data.Constants._PLAYLIST_All_Audio;
 import static com.example.shepherdxx.c_player.data.Constants._PLAYLIST_Cache;
 import static com.example.shepherdxx.c_player.data.Constants._PLAYLIST_RADIO;
@@ -46,9 +48,16 @@ public class PlayListInfo {
         return d;
     }
 
+    public PlayListInfo(long playlistId, String name, int type) {
+        this.pl_Id = playlistId;
+        this.pl_name = name;
+        this.plType = type;
+    }
+
     public PlayListInfo(long playlistId, String name) {
         this.pl_Id = playlistId;
         this.pl_name = name;
+        this.plType = MP_SD_U;
     }
 
     public long getPl_Id() {
@@ -67,14 +76,14 @@ public class PlayListInfo {
     }
 
     public static PlayListInfo All() {
-        return new PlayListInfo(Constants.PLAYLIST_All_Audio, _PLAYLIST_All_Audio);
+        return new PlayListInfo(Constants.PLAYLIST_All_Audio, _PLAYLIST_All_Audio , MP_SD_U);
     }
 
     public static PlayListInfo Cache() {
-        return new PlayListInfo(Constants.PLAYLIST_Cache, _PLAYLIST_Cache);
+        return new PlayListInfo(Constants.PLAYLIST_Cache, _PLAYLIST_Cache , MP_SD_U);
     }
 
     public static PlayListInfo Radio() {
-        return new PlayListInfo(Constants.PLAYLIST_RADIO, _PLAYLIST_RADIO);
+        return new PlayListInfo(Constants.PLAYLIST_RADIO, _PLAYLIST_RADIO, MP_RADIO);
     }
 }

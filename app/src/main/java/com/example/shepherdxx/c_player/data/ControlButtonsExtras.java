@@ -87,16 +87,6 @@ public class ControlButtonsExtras implements
     }
 
 
-//    public static ControlButtonsExtras setUpdateSongTime(Activity activity,
-//                                                         final Handler myHandler,
-//                                                         final ImageButton btPlay,
-//                                                         final SeekBar seekBar,
-//                                                         final TextView fTime
-//    ) {
-//        //encoded song listener
-//        return new ControlButtonsExtras(activity,myHandler,btPlay,seekBar,fTime,null,null);
-//    }
-
     private Player_Background serviceOn = null;
 
     private MyTrackInfo currentTrack() {
@@ -191,10 +181,8 @@ public class ControlButtonsExtras implements
         String SongTitle = activity.getResources().getString(R.string.action_loading);
         if (currentTrack() != null) {
             SongTitle += " " + currentTrack().getTitle();
-            if (listener != null) {
-                listener.getTrackName(SongTitle);
-                if (rTitle != null) rTitle.setText(SongTitle);
-            }
+            if (rTitle != null) rTitle.setText(SongTitle);
+            if (listener != null) listener.getTrackName(SongTitle);
             Log.i(Log_Tag, "SongTitle  " + File.pathSeparator + SongTitle);
         }
     }
@@ -216,10 +204,8 @@ public class ControlButtonsExtras implements
             setTime(sTime, curTime());
             if (seekBar != null) seekBar.setMax((int) finalTime);
         }
-        if (listener != null) {
-            listener.getTrackName(SongTitle);
-            if (rTitle != null) rTitle.setText(SongTitle);
-        }
+        if (rTitle != null) rTitle.setText(SongTitle);
+        if (listener != null) listener.getTrackName(SongTitle);
         Log.i(Log_Tag, "SongTitle  " + File.pathSeparator + SongTitle);
         Log.i(Log_Tag, "Title Time " + File.pathSeparator + Duration);
     }
@@ -298,19 +284,19 @@ public class ControlButtonsExtras implements
                     if (action != null)
                         switch (action) {
                             case MP_PREPARE_RADIO:
-                                Log.i(Log_Tag, "BroadcastReceiver recived MP_PREPARE_RADIO");
+                                Log.i(Log_Tag, "BroadcastReceiver received MP_PREPARE_RADIO");
                                 visibilityCheck = true;
                                 run();
                                 loadRadio();
                                 break;
                             case MP_STARTED:
-                                Log.i(Log_Tag, "BroadcastReceiver recived MP_STARTED");
+                                Log.i(Log_Tag, "BroadcastReceiver received MP_STARTED");
                                 visibilityCheck = true;
                                 run();
                                 Title();
                                 break;
                             case MP_STOPED:
-                                Log.i(Log_Tag, "BroadcastReceiver recived MP_STOPED");
+                                Log.i(Log_Tag, "BroadcastReceiver received MP_STOPED");
                                 stop();
                                 break;
                             case MP_PREPARE:

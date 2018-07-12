@@ -735,8 +735,8 @@ public class Player_Background
     }
 
     private int mSoundVolume(String key) {
-        int Volume = sharedPreferences.getInt(key, 50);
-        int value = 50;
+        int Volume = sharedPreferences.getInt(key, 100);
+        int value = 100;
         try {
             value = Volume;
         } catch (NumberFormatException e) {

@@ -42,8 +42,8 @@ public class MyTrackInfo {
     }
 
 
-    public MyTrackInfo(String mRadio, String mDescription, String mUri) {
-        this.mRadio = mRadio;
+    public MyTrackInfo(String mTitle, String mDescription, String mUri) {
+        this.mTitle = mTitle;
         this.mUri = mUri;
         this.mDescription = mDescription;
     }
@@ -55,12 +55,12 @@ public class MyTrackInfo {
         this.mFileCreated = mFileCreated;
     }
 
-    private String mRadio;
+    private String mTitle;
     private String mDescription;
     private String mUri;
 
-    public String getmRadio() {
-        return mRadio;
+    public String getmTitle() {
+        return mTitle;
     }
 
     public String getmDescription() {
@@ -71,8 +71,8 @@ public class MyTrackInfo {
         return mUri;
     }
 
-    public void setmRadio(String mRadio) {
-        this.mRadio = mRadio;
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
     }
 
     public void setmDescription(String mDescription) {
@@ -256,7 +256,7 @@ public class MyTrackInfo {
     }
 
     public String getTitle() {
-        if (getmRadio() != null) return getmRadio();
+        if (getmTitle() != null) return getmTitle();
         if (getTrackName() != null) return getTrackName();
         return null;
     }

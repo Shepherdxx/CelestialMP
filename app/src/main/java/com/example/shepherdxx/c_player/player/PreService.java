@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.shepherdxx.c_player.Main2Activity;
+import com.example.shepherdxx.c_player.MainActivity;
 
 import static com.example.shepherdxx.c_player.data.PlayerActions.ACTION_NEXT_SONG;
 import static com.example.shepherdxx.c_player.data.PlayerActions.ACTION_PLAY;
@@ -71,7 +71,7 @@ public class PreService extends Activity {
         if (action != null)
             switch (action) {
                 case ACTION_PLAY:
-                    Intent intent = new Intent(this, Main2Activity.class);
+                    Intent intent = new Intent(this, MainActivity.class);
                     if (hasInstance()) {
                         intent.setAction(ACTION_RESUME);
                     } else intent.setAction(ACTION_START);

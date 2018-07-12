@@ -20,37 +20,38 @@ public final class Constants {
     public static final String RECEIVER_DATA = RECEIVER + ".data";
 
     public static final String MP_PREPARE_RADIO = "app.broadCast.MP_PREPARE_RADIO";
-    public static final String MP_PREPARE = "app.broadCast.MP_PREPARE";
-    public static final String MP_STARTED = "app.broadCast.MP_STARTED";
-    public static final String MP_STOPED = "app.broadCast.MP_STOPED";
-    public static final String MP_ERROR = "app.broadCast.MP_ERROR";
+    public static final String MP_PREPARE       = "app.broadCast.MP_PREPARE";
+    public static final String MP_STARTED       = "app.broadCast.MP_STARTED";
+    public static final String MP_STOPED        = "app.broadCast.MP_STOPED";
+    public static final String MP_ERROR         = "app.broadCast.MP_ERROR";
 
     public static final int SERVICE_DELAY = 6000;
 
-    public final static int MP_PAUSE = 0;
-    public final static int MP_PLAY = 1;
-    public final static int MP_HTTP = 10;
-    public final static int MP_RADIO = 11;
-    public final static int MP_SD = 12;
-    public final static int MP_RAW = 13;
-    public final static int MP_SD_U = 14;
-    public final static int MP_EMPTY = -0xA;
-    public final static int SERVICE_START = 14;
+    public final static int MP_PAUSE        = 0;
+    public final static int MP_PLAY         = 1;
+    public final static int MP_HTTP         = 10;
+    public final static int MP_RADIO        = 11;
+    public final static int MP_SD           = 12;
+    public final static int MP_RAW          = 13;
+    public final static int MP_SD_U         = 14;
+    public final static int MP_EMPTY        = -0xA;
+    public final static int SERVICE_START   = 14;
 
-    public final static int PLAYLIST_All_Audio = -1;
-    public final static int PLAYLIST_Cache = -2;
-    public final static int PLAYLIST_RADIO = -3;
-    public static final String _PLAYLIST_RADIO = "Radio playlist";
-    public static final String _PLAYLIST_All_Audio = "All Audio";
-    public static final String _PLAYLIST_Cache = "Cache";
+    public final static int PLAYLIST_All_Audio  = -1;
+    public final static int PLAYLIST_Cache      = -2;
+    public final static int PLAYLIST_RADIO      = -3;
+    public final static int SAMPLE              = -4;
+    public static final String _PLAYLIST_RADIO      = "Radio playlist";
+    public static final String _PLAYLIST_All_Audio  = "All Audio";
+    public static final String _PLAYLIST_Cache      = "Cache";
+    public static final String _SAMPLE              = "Sample";
 
-
-    public static final String PLAYLIST_ID = MediaStore.Audio.Playlists.Members._ID;
-    public static final String AUDIO_ID = MediaStore.Audio.Playlists.Members.AUDIO_ID;
+    public static final String PLAYLIST_ID  = MediaStore.Audio.Playlists.Members._ID;
+    public static final String AUDIO_ID     = MediaStore.Audio.Playlists.Members.AUDIO_ID;
 
 
     public final static int YES = 1;
-    public final static int NO = 0;
+    public final static int NO  = 0;
 
 
     public static final String DEFAULT_R_M = "Not repeated";

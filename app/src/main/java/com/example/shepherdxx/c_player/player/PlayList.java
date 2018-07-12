@@ -2,30 +2,139 @@ package com.example.shepherdxx.c_player.player;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.shepherdxx.c_player.data.Constants;
 import com.example.shepherdxx.c_player.data.PopUpToast;
+import com.example.shepherdxx.c_player.radio.Contract.RDB_Entry;
+import com.example.shepherdxx.c_player.radio.R_DbHelper;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.example.shepherdxx.c_player.data.Constants.URI_RADIO_AFTER_BASE;
-import static com.example.shepherdxx.c_player.data.Constants.URI_RADIO_BASE;
 
 public class PlayList {
 
-    Context mContext;
+    private Context mContext;
+    private String logTag=PlayList.class.getSimpleName();
 
     public PlayList(Context context) {
         mContext = context;
     }
 
-
-    public PlayListInfo createPlaylist(long id) {
-        return null;
+    public PlayListInfo createPlaylist(int id) {
+        PlayListInfo current= null;
+        switch (id){
+            case Constants.PLAYLIST_RADIO:
+                current=PlayListInfo.Radio();
+                current.audioTracks=plCreate(id);
+                Log.i(logTag, "create " + current.audioTracks.toString());
+                break;
+//            case Constants.PLAYLIST_All_Audio:
+//                current=PlayListInfo.All();
+//                current.plType = Constants.MP_SD_U;
+//                current.audioTracks=plCreate(id);
+//                break;
+//            case Constants.PLAYLIST_Cache:
+//                current=PlayListInfo.Cache();
+//                current.plType = Constants.MP_SD_U;
+//                current.audioTracks=plCreate(id);
+//                Log.i(logTag, "create " + current.audioTracks.size());
+//                break;
+//            default:
+//                ArrayList<Long> audioIds= getAudioID(id);
+//                current=getPlayListInfo(id);
+//                current.plType = Constants.MP_SD_U;
+//                current.audioIds = audioIds;
+//                current.audioTracks=plCreate(id,audioIds);
+//                break;
+        }
+        return current;
     }
 
+    private ArrayList<MyTrackInfo> plCreate(int id) {
+        return plCreate(id, null);
+    }
+
+    //Создаем плейлист
+    private ArrayList<MyTrackInfo> plCreate(int id,ArrayList<Long> audioIds) {
+        ArrayList<MyTrackInfo> cur=null;
+        Log.i("plCreate", "плейлист подготовка");
+//        sharedPreferences=getDefaultSharedPreferences(mContext);
+//        b= sharedPreferences.getBoolean("req_perm", false);
+//        if (b){
+            switch (id) {
+                case Constants.PLAYLIST_RADIO:
+                    cur = RadioList();
+                    break;
+//                case Constants.PLAYLIST_Cache:
+//                    cur = loadTracks(id, MyCachePath.getAbsolutePath(),audioIds);
+//                    break;
+//                default:
+//                    cur = loadTracks(id,null,audioIds);
+//                    break;
+            }
+            if (cur!=null)Log.i("PlayListTrue create", " " + cur.size());
+            return cur;
+//        Log.i("PlayListTrue create", "need to get Permission");
+//        return null;
+    }
+//
+//    private MyTrackInfo cursorTrack(Cursor cursor,int playlistId){
+//        MyTrackInfo songSD=null;
+//        String artist, title, name, album, url;
+//        long duration,audioId;
+//        url = cursor.getString(0);
+//        artist = cursor.getString(1);
+//        album = cursor.getString(2);
+//        name = cursor.getString(3);
+//        title = cursor.getString(4);
+//        duration = cursor.getLong(5);
+//        audioId = cursor.getLong(6);
+//        String[] proj = {url, artist, album, name, title};
+//        if (duration!=0){
+//            songSD = new MyTrackInfo(proj,duration,audioId);
+//            songSD.setPlaylistId(playlistId);}
+//        return songSD;
+//    }
+//
+//    private ArrayList<MyTrackInfo> loadTracks(int playlistId, String cUri, ArrayList<Long> audioIds) {
+//        ArrayList<MyTrackInfo> rows=new ArrayList<>();
+//        String table = "TRACK";
+//        final String[] projection = MyTrackInfo.FILLED_PROJECTION;
+//        String selection= MediaStore.Audio.Media.IS_MUSIC + "!=0";
+//        if (audioIds != null) {
+//            int i;
+//            for (i = 0; i < audioIds.size(); i++)
+//                selection = new StringBuilder()
+//                        .append(selection)
+//                        .append(" AND ")
+//                        .append(MediaStore.Audio.Media._ID)
+//                        .append("= ")
+//                        .append(audioIds.get(i))
+//                        .toString();
+//        }
+//        String sortBy = MediaStore.Audio.Media.ARTIST;
+//
+//        QueryTask queryTask=new QueryTask(table, projection, selection, null, sortBy);
+//        Cursor cursor=queryTask.runMyQuery(mContext);
+//        if (cursor != null) {
+//            MyTrackInfo songSD;
+//            while (cursor.moveToNext()) {
+//                songSD = cursorTrack(cursor,playlistId);
+//                if (songSD != null) {File f = new File(songSD.getFileName());
+//                    if (cUri == null) rows.add(songSD);
+//                    else
+//                    if (f.exists() && f.getAbsolutePath().contains(cUri)) {
+//                        rows.add(songSD);
+////                    Log.i(logTag, "MusicScroll " + url + File.pathSeparator + name + File.pathSeparator + album);
+//                    }
+//                }
+//            }cursor.close();
+//        }
+//        return rows;
+//    }
 
     private ArrayList<Long> getAudioID(int playlistId) {
         ArrayList<Long> ids = new ArrayList<>();
@@ -54,12 +163,7 @@ public class PlayList {
     }
 
 
-    ArrayList<MyTrackInfo> RadioList = new ArrayList<>();
 
-    public ArrayList<MyTrackInfo> RadioList() {
-        RadioPlayListCreation();
-        return RadioList;
-    }
 
     private MyTrackInfo song(String mR, String mD, String mU, int id) {
         MyTrackInfo song = new MyTrackInfo(mR,
@@ -69,42 +173,52 @@ public class PlayList {
         return song;
     }
 
-    int index;
-    private String mUri;
-    private ArrayList<MyTrackInfo> rows = new ArrayList<>();
-    String[] adi = {"http://us3.internet-radio.com:8007/",
-            "http://air2.radiorecord.ru:805/rock_320",
-            "http://84.22.142.130:8000/arstream?4&28",
-            "http://81.88.36.42:8010/"};
-
-    //создание плейлиста
-    private void RadioPlayListCreation() {
-        if (rows.isEmpty()) {
-            for (index = 1; index <= 5; index++) {
-                mUri = URI_RADIO_BASE + String.valueOf(index) + URI_RADIO_AFTER_BASE;
-                Log.i("Radio ", String.valueOf(index) + " " + String.valueOf(mUri));
-                rows.add(
-                        song("Radio " + String.valueOf(index),
-                                mUri,
-                                mUri,
-                                Constants.PLAYLIST_RADIO)
+    //создание плейлиста радио
+    private ArrayList<MyTrackInfo> RadioList() {
+        ArrayList<MyTrackInfo> rows = new ArrayList<>();
+            R_DbHelper dbHelper = new R_DbHelper(mContext);
+            SQLiteDatabase mDb = dbHelper.getReadableDatabase();
+            String[] projection = {
+                    RDB_Entry.COLUMN_NAME,
+                    RDB_Entry.COLUMN_URL,
+                    RDB_Entry.COLUMN_DESCRIPTION
+            };
+            Cursor cursor = mDb.query(
+                    RDB_Entry.TABLE_NAME,
+                    projection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
                 );
+            if (cursor == null || cursor.getCount() < 1) {
+                return null;
             }
-            addMoreTo(rows);
-            RadioList = rows;
-            Log.i("Radio", "плейлист создан");
-        } else Log.i("Radio", "плейлист уже есть");
-    }
-
-    private void addMoreTo(ArrayList<MyTrackInfo> PTI) {
-        for (int i = 0; i < adi.length; i++) {
-            mUri = adi[i];
-            Log.i("Radio ", String.valueOf(index + i) + " " + String.valueOf(mUri));
-            PTI.add(
-                    song("Radio " + String.valueOf(index + i),
-                            mUri,
-                            mUri,
-                            Constants.PLAYLIST_RADIO));
-        }
+            if (cursor.moveToFirst()){
+                while (!cursor.isAfterLast()) {
+                    int addressColumnIndex = cursor.getColumnIndex(RDB_Entry.COLUMN_URL);
+                    int nameColumnIndex    = cursor.getColumnIndex(RDB_Entry.COLUMN_NAME);
+                    int descColumnIndex    = cursor.getColumnIndex(RDB_Entry.COLUMN_DESCRIPTION);
+                    String radioAddress = "http://" + cursor.getString(addressColumnIndex);
+                    String radioTitle   = cursor.getString(nameColumnIndex);
+                    String description  = cursor.getString(descColumnIndex);
+                    rows.add(
+                            song(   radioTitle,
+                                    description,
+                                    radioAddress,
+                                    Constants.PLAYLIST_RADIO));
+                    try {
+                        cursor.moveToNext();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                        Log.e("PlayList","Cursor is out of range");
+                    }
+                }
+                Log.i("Radio", "плейлист создан");
+                cursor.close();
+            } else Log.i("Radio", "плейлист уже есть");
+        return rows;
     }
 }
