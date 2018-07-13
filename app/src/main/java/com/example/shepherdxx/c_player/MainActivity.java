@@ -1,5 +1,7 @@
 package com.example.shepherdxx.c_player;
 
+import android.app.DialogFragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,13 +14,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.shepherdxx.c_player.data.PopUpToast;
+import com.example.shepherdxx.c_player.player.Player_Background;
 import com.example.shepherdxx.c_player.radio.Fragment_Radio;
+import com.example.shepherdxx.c_player.settings.MySettingsActivity;
+import com.example.shepherdxx.c_player.settings.VolumeDialog;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.example.shepherdxx.c_player.player.Player_Background.soundVolume;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity
+        extends AppCompatActivity
+        implements VolumeDialog.VolumeDialogListener
+{
 
     SharedPreferences sharedPreferences;
     PopUpToast toast;
@@ -141,5 +153,43 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return cardState;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        Log.i("MainActivity", "onCreateOptionsMenu");
+        return true;
+    }
+
+    String key_volume;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        // When the home button is pressed, take the user back to the VisualizerActivity
+        switch (id){
+            case (R.id.pref):
+                Intent startSettingsActivity = new Intent(MainActivity.this, MySettingsActivity.class);
+                startActivity(startSettingsActivity);
+                break;
+            case R.id.volume_menu:
+                key_volume=getResources().getString(R.string.key_apps_volume);
+                VolumeDialog vD= new VolumeDialog();
+                Bundle vBundle=new Bundle();
+                int mSoundVolume =sharedPreferences.getInt(key_volume, 60);
+                vBundle.putInt("mSoundVolume",mSoundVolume);
+                vD.setArguments(vBundle);
+                vD.show(getFragmentManager(),"VolumeDialog");
+                Toast.makeText(this,"Volume",Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, int volumeValue) {
+        sharedPreferences.edit().putInt(key_volume, volumeValue).apply();
+        soundVolume=volumeValue;
+        Player_Background.sInstance.setVolume();
     }
 }

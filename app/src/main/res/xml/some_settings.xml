@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/settings_category_1">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="FullDate"
+            android:summaryOff="Day of the week"
+            android:summaryOn="DD.MMMM.YYYY"
+            android:title="FullDate" />
+
+        <EditTextPreference
+            android:defaultValue="@string/default_name"
+            android:key="@string/key_your_name"
+            android:title="@string/your_name"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_2">
+
+        <EditTextPreference
+            android:title="@string/cache_folder_name"
+            android:key="@string/key_cache_folder_name"
+            android:defaultValue="@string/default_cache_folder_name"
+            >
+
+        </EditTextPreference>
+
+        <ListPreference
+            android:dialogTitle=""
+            android:entries="@array/player_repeat_mode"
+            android:entryValues="@array/player_repeat_mode"
+            android:defaultValue="@string/none_repeat"
+            android:key="@string/key_player_repeat_mode"
+            android:title="@string/player_repeat_mode" />
+        />
+
+        <ListPreference
+            android:dialogTitle=""
+            android:entries="@array/control_panel"
+            android:entryValues="@array/control_panel"
+            android:defaultValue="@string/control_panel_default"
+            android:key="@string/key_control_panel"
+            android:title="@string/key_control_panel" />
+        />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_3">
+
+        <Preference
+            android:defaultValue="@integer/default_volume"
+            android:key="@string/key_apps_volume"
+            android:title="@string/apps_volume"
+
+            android:summary="в интервале от 0 до 100"
+            />
+
+        <Preference
+            android:defaultValue="0"
+            android:key="@string/key_logs"
+            android:title="@string/logs"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
+

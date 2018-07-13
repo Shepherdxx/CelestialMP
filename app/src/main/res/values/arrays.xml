@@ -110,4 +110,56 @@
         <item>58</item>
         <item>59</item>
     </string-array>
+
+
+    <!-- These are the options displayed in the Folder drop-down Spinner -->
+    <string-array name="array_folder_options">
+        <item>@string/editor_folder_no_changes</item>
+        <item>@string/editor_folder_cache</item>
+        <item>@string/editor_folder_music</item>
+
+    </string-array>
+
+    <string-array name="array_sort_options">
+        <item>@string/FILE_SIZE_ASC</item>
+        <item>@string/FILE_SIZE_DES</item>
+        <item>@string/FILE_NAME_ASC</item>
+        <item>@string/FILE_NAME_DES</item>
+        <item>@string/FILE_L_M_ASC</item>
+        <item>@string/FILE_L_M__DES</item>
+
+    </string-array>
+
+    <string name="FILE_SIZE_ASC">FILE_SIZE_ASC</string>
+    <string name="FILE_SIZE_DES">FILE_SIZE_DES</string>
+    <string name="FILE_NAME_ASC">FILE_NAME_ASC</string>
+    <string name="FILE_NAME_DES">FILE_NAME_DES</string>
+    <string name="FILE_L_M_ASC">FILE_L_M_ASC</string>
+    <string name="FILE_L_M__DES">FILE_L_M__DES</string>
+
+    <string-array name="menu">
+        <item>@string/menu_option_1</item>
+        <item>@string/menu_option_2</item>
+        <item>@string/menu_option_5</item>
+        <item>@string/menu_option_6</item>
+        <item>@string/menu_option_4</item>
+        <item>@string/menu_option_3</item>
+    </string-array>
+
+    <string-array name="player_option">
+        <item>@string/player_option_1</item>
+        <item>@string/player_option_2</item>
+    </string-array>
+
+    <string-array name="empty_array"/>
+    <string-array name="player_repeat_mode">
+        <item>@string/repeat</item>
+        <item>@string/repeat_all</item>
+        <item>@string/none_repeat</item>
+    </string-array>
+
+    <string-array name="control_panel">
+        <item>@string/control_panel_retro</item>
+        <item>@string/control_panel_default</item>
+    </string-array>
 </resources>

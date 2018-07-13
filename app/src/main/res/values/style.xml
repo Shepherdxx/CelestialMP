@@ -73,4 +73,9 @@
         <item name="android:paddingTop">16dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
+
+    <!-- Light application theme -->
+    <style parent="Theme.AppCompat.Light.DarkActionBar" name="AppTheme.Light">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
 </resources>

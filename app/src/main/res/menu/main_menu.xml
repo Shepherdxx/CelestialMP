@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- Options menu for the EditorActivity -->
+    <menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".">
+
+        <item
+            android:id="@+id/search"
+            android:title="@string/action_save"
+            android:icon="@drawable/ic_album_black_48dp"
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/pref"
+            android:title="@string/menu_option_6"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/volume_menu"
+            android:title="@string/menu_option_18"
+            app:showAsAction="never" />
+    </menu>
