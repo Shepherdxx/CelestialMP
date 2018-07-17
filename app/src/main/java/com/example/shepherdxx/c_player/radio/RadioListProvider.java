@@ -198,10 +198,9 @@ public class RadioListProvider extends ContentProvider {
         if (favour == null || !RDB_Entry.isValidValue(favour)) {
             throw new IllegalArgumentException("Radio Chanel requires valid value");
         }
-
         // Get writeable database
         SQLiteDatabase database = mRDbHelper.getWritableDatabase();
-        // Insert the new pet with the given values
+        // Insert the new channel with the given values
         long id = database.insert(RDB_Entry.TABLE_NAME, null, values);
         // If the ID is -1, then the insertion failed. Log an error and return null.
         if (id == -1) {

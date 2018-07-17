@@ -105,59 +105,83 @@ public class RadioDB_Edit
     /**
      * Get user input from editor and save new RadioChanel into database.
      */
-    private void saveRadioChanel() {
+    private boolean saveRadioChanel() {
         // Чтение данных, удаение ненужных пробелов
-        String description      = mDescriptionEditText.getText().toString().trim();
-        String addressString    = mAddressEditText.getText().toString().trim();
-        String nameString       = mNameEditText.getText().toString().trim();
+        String description = mDescriptionEditText.getText().toString().trim();
+        String addressString = mAddressEditText.getText().toString().trim();
+        String nameString = mNameEditText.getText().toString().trim();
 
 
         if (mCurrentDataUri == null &&
                 TextUtils.isEmpty(nameString) &&
                 TextUtils.isEmpty(description) &&
-                TextUtils.isEmpty(addressString)) {
-
+                TextUtils.isEmpty(addressString))
             confirmation();
-
+        if (TextUtils.isEmpty(addressString)) {
+            toast.setMessage("Заполните адресс");
+            return false;
         } else {
-            if (TextUtils.isEmpty(addressString)) {
-                toast.setMessage("Заполните адресс");
+            //Проверка на наличие в БД такого пути
+            String[] projection = {
+                    RDB_Entry._ID,
+                    RDB_Entry.COLUMN_URL};
+            Cursor cursor=getContentResolver().query(RDB_Entry.CONTENT_URI,projection,null,null,null);
+            assert cursor != null;
+            if (cursor.moveToFirst()){
+                while (!cursor.isAfterLast()) {
+                    int addressColumnIndex = cursor.getColumnIndex(RDB_Entry.COLUMN_URL);
+                    String radioAddress = cursor.getString(addressColumnIndex);
+                    boolean check = addressString.equals(radioAddress);
+                    Log.i("RadioDB_EDIT","check db for equals " + check);
+                    if (check) return false;
+                    try {
+                        cursor.moveToNext();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                        Log.e("RadioDB_EDIT","Cursor is out of range");
+                    }
+                } cursor.close();
             }
-        }
-        //Todo Добавить проверку на наличие в БД такого пути
-        // Создаем объект ContentValues и  вкладываем наши значения.
-        ContentValues values = new ContentValues();
-        values.put(RDB_Entry.COLUMN_URL, addressString);
-        if (TextUtils.isEmpty(nameString)) nameString = addressString;
-        values.put(RDB_Entry.COLUMN_NAME, nameString);
-        values.put(RDB_Entry.COLUMN_FAVOURITE, mValue);
-        values.put(RDB_Entry.COLUMN_DESCRIPTION, description);
+            // Создаем объект ContentValues и  вкладываем наши значения.
+            ContentValues values = new ContentValues();
+            values.put(RDB_Entry.COLUMN_URL, addressString);
+            if (TextUtils.isEmpty(nameString)) nameString = addressString;
+            values.put(RDB_Entry.COLUMN_NAME, nameString);
+            values.put(RDB_Entry.COLUMN_FAVOURITE, mValue);
+            values.put(RDB_Entry.COLUMN_DESCRIPTION, description);
 
-        // Show a toast message depending on whether or not the insertion was successful
+            // Show a toast message depending on whether or not the insertion was successful
 
-        if (mCurrentDataUri==null){
-            Uri newUri = getContentResolver().insert(RDB_Entry.CONTENT_URI, values);
-            if (newUri == null) {
-                // If the new content URI is null, then there was an error with insertion.
-                Log.e("saveRadioChanel", getString(R.string.editor_insert_radio_failed) + values.toString());
-                toast.setMessage(getString(R.string.editor_insert_radio_failed));
+            if (mCurrentDataUri == null) {
+                Uri newUri = getContentResolver().insert(RDB_Entry.CONTENT_URI, values);
+                if (newUri == null) {
+                    // If the new content URI is null, then there was an error with insertion.
+                    Log.e("saveRadioChanel", getString(R.string.editor_insert_radio_failed) + values.toString());
+                    toast.setMessage(getString(R.string.editor_insert_radio_failed));
+                    return false;
+                } else {
+                    // Otherwise, the insertion was successful and we can display a toast.
+                    Log.e("saveRadioChanel", values.toString());
+                    toast.setMessage(getString(R.string.editor_insert_radio_successful));
+                    return true;
+                }
             } else {
-                // Otherwise, the insertion was successful and we can display a toast.
-                Log.e("saveRadioChanel", values.toString());
-                toast.setMessage(getString(R.string.editor_insert_radio_successful));
-            }
-        } else {
-            //Данные существуют, их надо менять
-            int rowsAffected = getContentResolver().update(mCurrentDataUri, values, null, null);
-            if (rowsAffected == 0) {
-                //данные не поменялись
-                toast.setMessage(getString(R.string.editor_update_data_failed));
-            } else {
-                //изменения произошли
-                toast.setMessage(getString(R.string.editor_update_data_successful));
+                //Данные существуют, их надо менять
+                int rowsAffected = getContentResolver().update(mCurrentDataUri, values, null, null);
+                if (rowsAffected == 0) {
+                    //данные не поменялись
+                    toast.setMessage(getString(R.string.editor_update_data_failed));
+                    return false;
+                } else {
+                    //изменения произошли
+                    toast.setMessage(getString(R.string.editor_update_data_successful));
+                    return true;
+                }
             }
         }
     }
+
 
     /**
      * Setup the dropdown spinner that allows the user to select the gender of the pet.
@@ -224,9 +248,9 @@ public class RadioDB_Edit
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Save channel to database
-                saveRadioChanel();
+//                saveRadioChanel();
                 // Exit activity
-                finish();
+                if (saveRadioChanel())finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:

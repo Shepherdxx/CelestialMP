@@ -16,15 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.shepherdxx.c_player.data.PopUpToast;
-import com.example.shepherdxx.c_player.player.Player_Background;
 import com.example.shepherdxx.c_player.radio.Fragment_Radio;
 import com.example.shepherdxx.c_player.settings.MySettingsActivity;
 import com.example.shepherdxx.c_player.settings.VolumeDialog;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.example.shepherdxx.c_player.player.Player_Background.sInstance;
 import static com.example.shepherdxx.c_player.player.Player_Background.soundVolume;
 
 public class MainActivity
@@ -181,7 +180,6 @@ public class MainActivity
                 vBundle.putInt("mSoundVolume",mSoundVolume);
                 vD.setArguments(vBundle);
                 vD.show(getFragmentManager(),"VolumeDialog");
-                Toast.makeText(this,"Volume",Toast.LENGTH_LONG).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -190,6 +188,7 @@ public class MainActivity
     public void onDialogPositiveClick(DialogFragment dialog, int volumeValue) {
         sharedPreferences.edit().putInt(key_volume, volumeValue).apply();
         soundVolume=volumeValue;
-        Player_Background.sInstance.setVolume();
+        if (sInstance!=null)sInstance.setVolume();
+        toast.setMessage("changed to " + volumeValue);
     }
 }
